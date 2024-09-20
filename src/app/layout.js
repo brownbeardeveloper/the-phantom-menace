@@ -1,15 +1,14 @@
-import localFont from "next/font/local";
-import "./styles/css/globals.css";
+import { Inter, Roboto_Mono } from "@next/font/google";
+import "../styles/css/globals.css";
 
-const geistSans = localFont({
-  src: "./styles/fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
 });
-const geistMono = localFont({
-  src: "./styles/fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+
+const robotoMono = Roboto_Mono({
+  subsets: ["latin"],
+  variable: "--font-roboto-mono",
 });
 
 export const metadata = {
@@ -21,7 +20,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${inter.variable} ${robotoMono.variable} antialiased`}
       >
         {children}
       </body>
