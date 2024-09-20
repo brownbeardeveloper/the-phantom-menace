@@ -10,11 +10,14 @@
   },
   "dependencies": {
     "@next/font": "^14.2.13",
+    "@supabase/ssr": "^0.5.1",
+    "@supabase/supabase-js": "^2.45.4",
     "next": "14.2.12",
     "react": "^18",
     "react-dom": "^18"
   },
   "devDependencies": {
+    "@types/react": "18.3.8",
     "eslint": "^8",
     "eslint-config-next": "14.2.12",
     "postcss": "^8",
