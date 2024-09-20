@@ -12,3 +12,5 @@ npm run dev
 * `test` is for experimenting outside of an issue/ticket
 
 ***Always push changes to `dev`, not main***
+
+For an example, you want to add a new feature, then create a new branch `feature/new-feature` and do your work - when you are finished, push to `dev`
