@@ -11,4 +11,4 @@ npm run dev
 * `hotfix` is for changing code with a temporary solution and/or without following the usual process (usually because of an emergency)
 * `test` is for experimenting outside of an issue/ticket
 
-*** Always push changes to `dev`, not main ***
+***Always push changes to `dev`, not main***
