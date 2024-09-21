@@ -6,6 +6,9 @@ module.exports = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    letterSpacing: {
+      '0.5rem': '0.5rem', // Add your custom spacing
+    },
     extend: {
       colors: {
         background: "var(--background)",
