@@ -1,35 +1,39 @@
 
+import { redirect } from "next/navigation";
 import { createClient } from "../../services/supabase/server";
 import { signOutAction } from "../actions";
 
 export default async function Test() {
+    // skapa createClient och hämta data, bara för testens skull
     const supabase = createClient();
     const { data: notes, error } = await supabase.from('todos').select('*');
 
-    const handleLogout = async () => {
-        const { error } = await signOutAction();
-        if (error) {
-            console.error("Logout error: ", error);
-        } else {
-            console.log("Successfully logged out");
-            // Optionally redirect or update UI after logout
-        }
-    };
+    // hämta user info via supabase.auth.getUser()
+    const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
+    if (!user) {
+        // om användaren är inte inloggad, redirecta tbx t startsidan
+        return redirect("/");
+    }
+    
     if (error) {
         return <pre>Error fetching notes: {JSON.stringify(error, null, 2)}</pre>;
     }
-    // console.log("Fetched data: ", notes);
 
     return (
         <div>
             {error && <pre>Error fetching notes: {JSON.stringify(error, null, 2)}</pre>}
-            <button
-                onClick={handleLogout}
-                className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            >
-                Logout
-            </button>
+            <form action={signOutAction}>
+                <button
+                    type="submit"
+                    className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                >
+                    Logout
+                </button>
+            </form>
+            <h1>Hey, {user.email} !</h1>
             <pre>{JSON.stringify(notes, null, 2)}</pre>
         </div>
     );
