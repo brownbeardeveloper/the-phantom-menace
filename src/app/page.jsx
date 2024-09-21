@@ -1,3 +1,6 @@
+import { signInAction } from "./actions";
+import Link from "next/link";
+
 export default function Home() {
     return (
         <main className="h-screen w-screen flex flex-row">
@@ -11,38 +14,40 @@ export default function Home() {
                     <p className="tracking-0.5rem text-white">REGISTERED USERS</p>
                 </div>
                 <div className="flex flex-row m-5">
-                    <form>
-                        <div class="mb-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Email</label>
+                    <form action={signInAction}>
+                        <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">Email</label>
                             <input
                                 type="email"
+                                name="email"
                                 id="email"
                                 placeholder="me@example.com"
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 required
                             />
                         </div>
-                        <div class="mb-6">
-                            <label class="block text-gray-700 text-sm font-bold mb-2" for="password">Password</label>
+                        <div className="mb-6">
+                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">Password</label>
                             <input
                                 type="password"
+                                name="password"
                                 id="password"
                                 placeholder="********"
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 required
                             />
                         </div>
-                        <div class="flex items-center justify-between">
+                        <div className="flex items-center justify-between">
                             <button
                                 type="submit"
-                                class="bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                className="bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                             >
                                 Login
                             </button>
                         </div>
-                        <button class="text-white text-xs mt-4 underline">
+                        <Link href="/sign-up" className="text-white text-xs mt-4 underline">
                             Sign Up Here!
-                        </button>
+                        </Link>
                     </form>
                 </div>
             </div>
