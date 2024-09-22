@@ -1,4 +1,4 @@
-import { signInAction } from "./actions";
+import { signInAction } from "../services/supabase/data/account_actions";
 import Link from "next/link";
 
 export default function Home() {

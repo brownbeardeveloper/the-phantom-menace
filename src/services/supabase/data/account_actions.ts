@@ -1,21 +1,25 @@
 "use server";
 
-import { encodedRedirect } from "../services/supabase/utils";
-import { createClient } from "../services/supabase/server";
+import { encodedRedirect } from "../utils";
+import { createClient } from "../server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 export const signUpAction = async (formData: FormData) => {
     const email = formData.get("email")?.toString();
     const password = formData.get("password")?.toString();
+    const name = formData.get("name")?.toString();
+    const lastname = formData.get("lastname")?.toString();
+
     const supabase = createClient();
     const origin = headers().get("origin");
 
-    if (!email || !password) {
-        return { error: "Email and password are required" };
+    if (!email || !password || !name || !lastname) {
+        return { error: "All fields are required: email, password, name, and lastname." };
     }
 
-    const { error } = await supabase.auth.signUp({
+    // Auth registration
+    const { data, error: authError } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -23,16 +27,38 @@ export const signUpAction = async (formData: FormData) => {
         },
     });
 
-    if (error) {
-        console.error(error.code + " " + error.message);
-        return encodedRedirect("error", "/sign-up", error.message);
-    } else {
-        return encodedRedirect(
-            "success",
-            "/sign-up",
-            "Thanks for signing up! Please check your email for a verification link.",
-        );
+    if (authError) {
+        console.error(authError.code + " " + authError.message);
+        return encodedRedirect("error", "/sign-up", authError.message);
     }
+
+    const user = data?.user;
+
+    // Ensure user was successfully created
+    if (!user) {
+        return encodedRedirect("error", "/sign-up", "Failed to create user.");
+    }
+
+    // Insert user information into 'users' table
+    const { error: dbError } = await supabase
+        .from('users')
+        .insert({
+            user_uid: user.id, // Use the user id (auth uid)
+            name: name,
+            last_name: lastname,
+            created_at: new Date(), // Use current timestamp
+        });
+
+    if (dbError) {
+        console.error(dbError.code + " " + dbError.message);
+        return encodedRedirect("error", "/sign-up", "Failed to store user information.");
+    }
+
+    return encodedRedirect(
+        "success",
+        "/sign-up",
+        "Thanks for signing up! Please check your email for a verification link."
+    );
 };
 
 export const signInAction = async (formData: FormData) => {

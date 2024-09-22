@@ -1,17 +1,16 @@
 
 import { redirect } from "next/navigation";
 import { createClient } from "../../services/supabase/server";
-import { signOutAction } from "../actions";
+import { signOutAction } from "../../services/supabase/data/account_actions";
+import { getUserInfo } from "../../services/supabase/data/get_data";
 
 export default async function Test() {
-    // skapa createClient och hämta data, bara för testens skull
+    // skapa createClient och hämta todos data, bara för testens skull
     const supabase = createClient();
     const { data: notes, error } = await supabase.from('todos').select('*');
 
     // hämta user info via supabase.auth.getUser()
-    const {
-        data: { user },
-      } = await supabase.auth.getUser();
+    const user = await getUserInfo();
 
     if (!user) {
         // om användaren är inte inloggad, redirecta tbx t startsidan
@@ -33,7 +32,7 @@ export default async function Test() {
                     Logout
                 </button>
             </form>
-            <h1>Hey, {user.email} !</h1>
+            <h1>Hey, {user.name + " " + user.last_name}!</h1>
             <pre>{JSON.stringify(notes, null, 2)}</pre>
         </div>
     );

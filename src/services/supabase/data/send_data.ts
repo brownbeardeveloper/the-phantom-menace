@@ -1,0 +1,1 @@
+// ... denna fil ska innehålla funktioner som använder av INSERT/UPDATE sql
