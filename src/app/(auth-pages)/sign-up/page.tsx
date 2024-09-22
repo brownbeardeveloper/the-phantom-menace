@@ -2,6 +2,9 @@ import { signUpAction } from '../../../services/supabase/data/account_actions';
 import Link from 'next/link';
 
 export default function SignUp({ searchParams }: { searchParams: any }) {
+  
+  const successMessage = searchParams.success ? "Email validation is sent to you, check your email." : "";
+
   return (
     <main className="h-screen w-screen flex flex-row">
       <div className="h-screen w-1/4 p-5 min-w-60">
@@ -87,6 +90,11 @@ export default function SignUp({ searchParams }: { searchParams: any }) {
             >
               Sign Up
             </button>
+            {successMessage && (
+              <div className="mt-4 bg-green-500">
+                {successMessage}
+              </div>
+            )}
           </form>
         </div>
       </div>

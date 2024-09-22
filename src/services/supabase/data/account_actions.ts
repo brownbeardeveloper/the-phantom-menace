@@ -40,14 +40,17 @@ export const signUpAction = async (formData: FormData) => {
     }
 
     // Insert user information into 'users' table
-    const { error: dbError } = await supabase
+    const { data: insertData, error: dbError } = await supabase
         .from('users')
-        .insert({
+        .insert([{
             user_uid: user.id, // Use the user id (auth uid)
             name: name,
             last_name: lastname,
             created_at: new Date(), // Use current timestamp
-        });
+        }]);
+
+    // console.log("Insert Data:", insertData);
+    // console.log("Insert Error:", dbError);
 
     if (dbError) {
         console.error(dbError.code + " " + dbError.message);
@@ -60,6 +63,7 @@ export const signUpAction = async (formData: FormData) => {
         "Thanks for signing up! Please check your email for a verification link."
     );
 };
+
 
 export const signInAction = async (formData: FormData) => {
     const email = formData.get("email") as string;
