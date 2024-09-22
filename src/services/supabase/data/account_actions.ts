@@ -81,7 +81,7 @@ export const signInAction = async (formData: FormData) => {
     }
 
     console.log("Success: User logged in with email:", email);
-    return redirect("/test");
+    return encodedRedirect("success", "/test", ""); // Redirect with success parameter
 };
 
 export const forgotPasswordAction = async (formData: FormData) => {

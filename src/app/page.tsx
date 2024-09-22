@@ -1,7 +1,11 @@
 import { signInAction } from "../services/supabase/data/account_actions";
 import Link from "next/link";
 
-export default function Home() {
+export default function Home({ searchParams }: { searchParams: any }) {
+
+    // TODO: fix successmessage
+    const successMessage = searchParams.success ? "Login successful! Welcome back." : "";
+
     return (
         <main className="h-screen w-screen flex flex-row">
             <div className="h-screen w-1/4 p-5 min-w-60">
@@ -49,6 +53,11 @@ export default function Home() {
                             Sign Up Here!
                         </Link>
                     </form>
+                    {successMessage && (
+                        <div className="mt-4 bg-green-500">
+                            {successMessage}
+                        </div>
+                    )}
                 </div>
             </div>
         </main>
