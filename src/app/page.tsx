@@ -30,7 +30,7 @@ export default function Home({ searchParams }: { searchParams: any }) {
                                 required
                             />
                         </div>
-                        <div className="mb-6">
+                        <div>
                             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">Password</label>
                             <input
                                 type="password"
@@ -41,6 +41,14 @@ export default function Home({ searchParams }: { searchParams: any }) {
                                 required
                             />
                         </div>
+                        <div className="flex items-center justify-between mb-4">
+                            <Link href="/sign-up" className="text-white text-xs mt-4 underline">
+                                Sign Up Here!
+                            </Link>
+                            <Link href="/forget" className="text-white text-xs mt-4 underline">
+                                Forget password?
+                            </Link>
+                        </div>
                         <div className="flex items-center justify-between">
                             <button
                                 type="submit"
@@ -49,9 +57,6 @@ export default function Home({ searchParams }: { searchParams: any }) {
                                 Login
                             </button>
                         </div>
-                        <Link href="/sign-up" className="text-white text-xs mt-4 underline">
-                            Sign Up Here!
-                        </Link>
                     </form>
                     {successMessage && (
                         <div className="mt-4 bg-green-500">
