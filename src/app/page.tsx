@@ -1,10 +1,8 @@
-import { signInAction } from "../services/supabase/data/account_actions";
+import { signInAction } from "../services/supabase/account/account_actions";
 import Link from "next/link";
+import { LoginButtonComponent } from "../components/ui/LoginButtonComponent";
 
 export default function Home({ searchParams }: { searchParams: any }) {
-
-    // TODO: fix successmessage
-    const successMessage = searchParams.success ? "Login successful! Welcome back." : "";
 
     return (
         <main className="h-screen w-screen flex flex-row">
@@ -50,19 +48,13 @@ export default function Home({ searchParams }: { searchParams: any }) {
                             </Link>
                         </div>
                         <div className="flex items-center justify-between">
-                            <button
-                                type="submit"
-                                className="bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                            <LoginButtonComponent
+                                className="bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                             >
                                 Login
-                            </button>
+                            </LoginButtonComponent>
                         </div>
                     </form>
-                    {successMessage && (
-                        <div className="mt-4 bg-green-500">
-                            {successMessage}
-                        </div>
-                    )}
                 </div>
             </div>
         </main>

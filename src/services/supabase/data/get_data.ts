@@ -32,3 +32,21 @@ export const getUserInfo = async () => {
 
     return data; // Return the user's name and lastname
 };
+
+export const getUserInfoById = async (userId: string) => {
+    const supabase = createClient();
+
+    // Fetch name and lastname from 'users' table where uid matches the provided userId
+    const { data, error: queryError } = await supabase
+        .from('users')
+        .select('name, last_name')
+        .eq('user_uid', userId)
+        .single(); // 'single()' ensures only one record is returned
+
+    if (queryError) {
+        console.error('Error fetching user info:', queryError.message);
+        return null; // Handle error appropriately
+    }
+
+    return data; // Return the user's name and last_name
+};

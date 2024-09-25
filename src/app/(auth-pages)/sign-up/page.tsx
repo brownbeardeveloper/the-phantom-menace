@@ -1,4 +1,4 @@
-import { signUpAction } from '../../../services/supabase/data/account_actions';
+import { signUpAction } from '../../../services/supabase/account/account_actions';
 import Link from 'next/link';
 
 export default function SignUp({ searchParams }: { searchParams: any }) {

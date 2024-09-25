@@ -1,11 +1,10 @@
-import { forgotPasswordAction } from '../../../services/supabase/data/account_actions';
+import { forgotPasswordAction } from '../../../services/supabase/account/account_actions';
 import Link from 'next/link';
 
 export default function Forget({ searchParams }: { searchParams: any }) {
     // TODO: fix display text
     const message = searchParams.message || ""; // Get the message from searchParams
     const isError = searchParams.error === "Could not reset password"; // Check if there's an error (ensure it's a string comparison)
-    console.log(isError);
 
     return (
         <main className="h-screen w-screen flex flex-row">
