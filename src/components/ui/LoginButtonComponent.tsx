@@ -1,5 +1,5 @@
-// components/ui/SubmitButton.tsx
-"use client"; // Make sure this line is at the very top
+// components/ui/LoginButtonComponent.tsx
+"use client"; 
 
 import { Button as NextUIButton } from "@nextui-org/react";
 import { type ComponentProps } from "react";

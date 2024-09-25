@@ -62,8 +62,6 @@ export default async function Test() {
                     ))}
                 </div>
 
-
-
                 {/* Right Section */}
                 <div className="w-1/4 bg-gray-100 p-4">
                     {/* Placeholder for right content */}

@@ -1,10 +1,12 @@
 import { Navbar, NavbarContent } from "@nextui-org/react";
 import LogoutButtonComponent from "../components/ui/LogoutButtonComponent";
+import UserDropmenuComponent from "./ui/UserDropmenuComponent";
 
 interface NavbarProps {
     user: {
         name: string;
         last_name: string;
+        email: string;
     };
 }
 
@@ -16,8 +18,10 @@ const NavbarComponent = ({ user }: NavbarProps) => {
                 Navbar exempel
             </NavbarContent>
             <NavbarContent justify="end">
-                <span className="mr-4">{user.name} {user.last_name}</span>
-                <LogoutButtonComponent />
+
+                <span>{user.name} {user.last_name}</span>
+                <UserDropmenuComponent email={user.email}/>
+                {/* <LogoutButtonComponent /> */}
             </NavbarContent>
         </Navbar>
     );

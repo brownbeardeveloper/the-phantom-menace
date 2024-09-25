@@ -40,13 +40,13 @@ export const updateSession = async (request: NextRequest) => {
     const user = await supabase.auth.getUser();
 
     // protected routes (ändra test till annan rimlig namn sen)
-    if (request.nextUrl.pathname.startsWith("/test") && user.error) {
+    if (request.nextUrl.pathname.startsWith("/home") && user.error) {
       return NextResponse.redirect(new URL("/", request.url));
     }
 
     // om det är ngt fel med användare, till exempel ej inloggad, redirecta direkt till start sidan
     if (request.nextUrl.pathname === "/" && !user.error) {
-      return NextResponse.redirect(new URL("/test", request.url));
+      return NextResponse.redirect(new URL("/home", request.url));
     }
 
     return response;

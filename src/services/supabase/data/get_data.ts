@@ -17,6 +17,7 @@ export const getUserInfo = async () => {
     }
 
     const userId = user.id; // Authenticated user's uid
+    const email = user.email || "";
 
     // Fetch name and lastname from 'users' table where uid matches
     const { data, error: queryError } = await supabase
@@ -30,8 +31,12 @@ export const getUserInfo = async () => {
         return null; // Handle error appropriately
     }
 
-    return data; // Return the user's name and lastname
+    return {
+        ...data,
+        email,
+    }; // Return the user's name and lastname and email
 };
+
 
 export const getUserInfoById = async (userId: string) => {
     const supabase = createClient();
