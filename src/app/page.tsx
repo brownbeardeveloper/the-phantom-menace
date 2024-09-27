@@ -1,6 +1,6 @@
 import { signInAction } from "../services/supabase/account/account_actions";
 import Link from "next/link";
-import { LoginButtonComponent } from "../components/ui/LoginButtonComponent";
+import { LoginButtonComponent } from "../components/client/LoginButtonComponent";
 
 export default function Home({ searchParams }: { searchParams: any }) {
 

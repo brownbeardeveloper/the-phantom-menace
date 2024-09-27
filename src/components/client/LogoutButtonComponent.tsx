@@ -29,18 +29,12 @@ export function LogoutButtonComponent({
     };
 
     return (
-        <form onSubmit={handleLogout}> {/* Form encapsulating the button */}
-            <NextUIButton
-                type="submit"
-                color="danger"
-                aria-disabled={pending} // This indicates the button is in a pending state
-                {...props}
-                disabled={pending} // Disable the button when pending
-                className="w-full"
-            >
-                {pending ? pendingText : children} {/* Show pendingText when pending */}
-            </NextUIButton>
-        </form>
+        <div
+            className="w-full text-left cursor-pointer"
+            onClick={handleLogout} // Trigger logout on click
+        >
+            {pending ? pendingText : children} {/* Show pendingText when pending */}
+        </div>
     );
 }
 

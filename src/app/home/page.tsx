@@ -1,8 +1,8 @@
 import { redirect } from "next/navigation";
 import { createClient } from "../../services/supabase/server";
 import { getUserInfo, getUserInfoById } from "../../services/supabase/data/get_data";
-import NavbarComponent from "../../components/NavbarComponent";
-import PostComponent from "../../components/PostComponent";
+import NavbarComponent from "../../components/server/NavbarComponent";
+import PostComponent from "../../components/server/PostComponent";
 
 
 export default async function Test() {
