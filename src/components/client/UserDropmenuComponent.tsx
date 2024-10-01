@@ -9,22 +9,23 @@ import {
   } from "@nextui-org/react";
 import LogoutButtonComponent from "./LogoutButtonComponent";
   
-  export default function UserDropmenuComponent({fullname, email}: { email: string, fullname: string }) {
+  export default function UserDropmenuComponent({fullname, email, profilePictureSize}: { email: string, fullname: string, profilePictureSize: string }) {
+    
+    
     return (
-      <div className="flex items-center gap-4">
         <Dropdown placement="bottom-end">
           <DropdownTrigger>
             <User
               as="button"
-              description={<span className="text-blue-500">Member</span>}
               avatarProps={{
-                src: "https://avatars.githubusercontent.com/u/30373425?v=4",
+                src: "https://avatarfiles.alphacoders.com/322/thumb-1920-322895.jpg",
                 radius: "sm",
-                isBordered: true
+                isBordered: false,
+                style: { width: profilePictureSize, height: profilePictureSize },
               }}
-              name={fullname}
             />
           </DropdownTrigger>
+
           <DropdownMenu aria-label="User Actions" variant="shadow">
             <DropdownItem key="profile" showDivider isReadOnly>
               <p className="font-semibold">Signed in as</p>
@@ -39,7 +40,6 @@ import LogoutButtonComponent from "./LogoutButtonComponent";
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>
-      </div>
     );
   }
   

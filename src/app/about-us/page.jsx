@@ -1,5 +1,6 @@
 import { createClient } from "../../services/supabase/server";
 import { redirect } from "next/navigation";
+import NavbarComponent from "../../components/client/NavbarComponent"
 
 export default async function About() {
 
@@ -9,13 +10,21 @@ export default async function About() {
     data: { user },
   } = await supabase.auth.getUser();
 
-if (!user) {
-    // om användaren är inte inloggad, redirecta tbx t startsidan
-    return redirect("/");
-}
+// if (!user) {
+//  // om användaren är inte inloggad, redirecta tbx t startsidan
+//    return redirect("/");
+//}
+
+  // mock data
+  const mockUser = {
+    name: "John",
+    last_name: "Ash",
+    email: "john@example.com",
+  };
+
   return (
     <main className="">
-        <h1 className="font-bold text-xl">About Us</h1>
+        <NavbarComponent user={mockUser} />
     </main>
 );
   }
