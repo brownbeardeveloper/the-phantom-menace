@@ -1,6 +1,8 @@
 import { signInAction } from "../services/supabase/account/account_actions";
 import Link from "next/link";
 import { LoginButtonComponent } from "../components/client/LoginButtonComponent";
+import censorTextFilter from '../utils/offensive-words-filter'
+
 
 export default function Home({ searchParams }: { searchParams: any }) {
 
@@ -13,7 +15,7 @@ export default function Home({ searchParams }: { searchParams: any }) {
             </div>
             <div className="h-screen w-screen p-2 pt-5 bg-teal-500">
                 <div className="font-bold bg-teal-700">
-                    <p className="tracking-0.5rem text-white">REGISTERED USERS</p>
+                    <p className="tracking-0.5rem text-white ml-5">REGISTERED USERS</p>
                 </div>
                 <div className="flex flex-row m-5">
                     <form action={signInAction}>
