@@ -10,10 +10,10 @@ export default async function About() {
     data: { user },
   } = await supabase.auth.getUser();
 
-// if (!user) {
-//  // om användaren är inte inloggad, redirecta tbx t startsidan
-//    return redirect("/");
-//}
+  // if (!user) {
+  //  // om användaren är inte inloggad, redirecta tbx t startsidan
+  //    return redirect("/");
+  //}
 
   // mock data
   const mockUser = {
@@ -24,7 +24,10 @@ export default async function About() {
 
   return (
     <main className="">
-        <NavbarComponent user={mockUser} />
+      {/* <NavbarComponent user={mockUser} /> */}
+      <div className="mt-20 w-full max-w-7xl px-4 flex space-x-4">
+        <h1>About us ngt...</h1>
+      </div>
     </main>
-);
-  }
+  );
+}

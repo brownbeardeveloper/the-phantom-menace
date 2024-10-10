@@ -1,64 +1,57 @@
-import { signInAction } from "../services/supabase/account/account_actions";
-import Link from "next/link";
-import { LoginButtonComponent } from "../components/client/LoginButtonComponent";
-import censorTextFilter from '../utils/offensive-words-filter'
+import { redirect } from "next/navigation";
+import { createClient } from "../services/supabase/server";
+import { getUserInfo, getUserInfoById } from "../services/supabase/data/get_data";
+import MakePostComponent from "../components/server/MakePostComponent";
+import PostRealtimeComponent from "../components/client/PostRealtimeComponent";
 
+export default async function Home() {
+    const supabase = createClient();
+    const { data: notes, error } = await supabase.from('post').select('*');
 
-export default function Home({ searchParams }: { searchParams: any }) {
+    const user = await getUserInfo();
+
+    if (!user) {
+        return redirect("/login");
+    }
+
+    if (error) {
+        return <pre>Error fetching notes: {JSON.stringify(error, null, 2)}</pre>;
+    }
+
+    // Fetch the user info for each note creator (note.created_by)
+    const notesWithUserInfo = await Promise.all(
+        notes.map(async (note: any) => {
+            const createdByUser = await getUserInfoById(note.created_by); // Get user info by creator ID
+            return {
+                ...note,
+                createdByUser: {
+                    name: createdByUser?.name || 'Unknown',
+                    last_name: createdByUser?.last_name || ''
+                }
+            };
+        })
+    );
+
+    // Create a user map for easier access in the client
+    const initialUserMap = notesWithUserInfo.reduce((acc, note) => {
+        acc[note.created_by] = { name: note.createdByUser.name, last_name: note.createdByUser.last_name };
+        return acc;
+    }, {} as { [key: string]: { name?: string; last_name?: string } | null });
 
     return (
-        <main className="h-screen w-screen flex flex-row">
-            <div className="h-screen w-1/4 p-5 min-w-60">
-                <h1 className="font-bold text-2xl italic">WebCommunity™</h1>
-                <h2 className="m-5 font-bold text-teal-900">The World's FREE Web-Based Community</h2>
-                <p className="text-xs">© 1996-1997 WebCommunity. All rights reserved.</p>
-            </div>
-            <div className="h-screen w-screen p-2 pt-5 bg-teal-500">
-                <div className="font-bold bg-teal-700">
-                    <p className="tracking-0.5rem text-white ml-5">REGISTERED USERS</p>
+            <div className="mt-20 w-full max-w-7xl px-4 flex space-x-4">
+                <div className="w-1/4 bg-gray-100 p-4">
+                    <p>Left section content</p>
                 </div>
-                <div className="flex flex-row m-5">
-                    <form action={signInAction}>
-                        <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">Email</label>
-                            <input
-                                type="email"
-                                name="email"
-                                id="email"
-                                placeholder="me@example.com"
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                required
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">Password</label>
-                            <input
-                                type="password"
-                                name="password"
-                                id="password"
-                                placeholder="********"
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                required
-                            />
-                        </div>
-                        <div className="flex items-center justify-between mb-4">
-                            <Link href="/sign-up" className="text-white text-xs mt-4 underline">
-                                Sign Up Here!
-                            </Link>
-                            <Link href="/forget" className="text-white text-xs mt-4 underline">
-                                Forget password?
-                            </Link>
-                        </div>
-                        <div className="flex items-center justify-between">
-                            <LoginButtonComponent
-                                className="bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                            >
-                                Login
-                            </LoginButtonComponent>
-                        </div>
-                    </form>
+
+                <div className="w-3/4">
+                    <MakePostComponent user={user} />
+                    <PostRealtimeComponent initialPosts={notesWithUserInfo} initialUserMap={initialUserMap} /> {/* Pass enriched posts and user map */}
+                </div>
+
+                <div className="w-1/4 bg-gray-100 p-4">
+                    <p>Right section content</p>
                 </div>
             </div>
-        </main>
     );
 }

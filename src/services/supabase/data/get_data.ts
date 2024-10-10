@@ -32,6 +32,7 @@ export const getUserInfo = async () => {
     }
 
     return {
+        uid: userId,
         ...data,
         email,
     }; // Return the user's name and lastname and email
@@ -55,3 +56,4 @@ export const getUserInfoById = async (userId: string) => {
 
     return data; // Return the user's name and last_name
 };
+
